@@ -54,7 +54,7 @@ class ViterbiTrellis:
         # Iterate left-to-right through layers of the graph.
         prev_layer = None
         prev_total_costs = [0]
-        for layer in self.trellis:
+        for idx_layer, layer in enumerate(self.trellis):
             if not layer:
                 raise ViterbiTrellisEmptyLayerException(
                     'Empty layer encountered in trellis')
@@ -83,7 +83,7 @@ class ViterbiTrellis:
                 argmin_idx = argmin(possible_path_costs)
 
                 # Compute the cost of being in this state.
-                state_cost = self.state_cost_fn(state)
+                state_cost = self.state_cost_fn(state, idx_layer)
 
                 # Record best parent and best-path cost at this node.
                 best_parents.append(argmin_idx)
